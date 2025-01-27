@@ -4,7 +4,7 @@ export const pincodeDetails = async (pincode) => {
 
   const options = {
     method: 'GET',
-    url: `${import.meta.env.VITE_PINCODE_API_URL}${pincode}`,
+    url: `${import.meta.env.VITE_PINCODE_API_URL}pincode/${pincode}`,
     headers: {
       'x-rapidapi-key': import.meta.env.VITE_PINCODE_API_KEY,
       'x-rapidapi-host': 'india-pincode-with-latitude-and-longitude.p.rapidapi.com',
