@@ -25,7 +25,7 @@ const Register = () => {
         status: true,
         myClass: ''
     });
-
+    const [loading, setLoading] = useState(false);
     const roles = [
         "Teacher",
         "Head of Department",
@@ -114,9 +114,9 @@ const Register = () => {
     };
 
     const handleSubmit = async (e) => {
+        setLoading(true);
         e.preventDefault();
         const form = new FormData();
-
         Object.keys(formData).forEach((key) => {
             if (key === "mySubjects") {
                 // Append the entire array as JSON or serialize it to a string.
@@ -127,9 +127,19 @@ const Register = () => {
         });
         const data = await user.register(form);
         if (data.success) {
+            setFormData({
+                name: '',
+                mobile: '',
+                email: '',
+                profilePic: '',
+                dob: '',
+                password: '',
+            });
+            setLoading(false);
             alert(data.message);
         }
         else {
+            setLoading(false);
             alert(data.message);
         }
 
@@ -183,7 +193,7 @@ const Register = () => {
                 <FloatingLabelInput label="State" id="state" name="state" value={formData.state} disabled={true} onChange={handleChange} />
                 <FloatingLabelInput label="Country" id="country" name="country" value={formData.country} disabled={true} onChange={handleChange} />
 
-                <button type="submit" className="w-full p-2 bg-[#1e2338] text-[#7498e5] rounded hover:bg-[#4560bd] hover:text-[#fff] col-span-3">Register</button>
+                <button disabled={loading} type="submit" className="w-full p-2 bg-[#1e2338] text-[#7498e5] rounded hover:bg-[#4560bd] hover:text-[#fff] col-span-3">{loading?"Registering":"Register"}</button>
             </form>
         </div>
     );
